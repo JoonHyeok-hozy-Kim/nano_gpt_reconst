@@ -1,0 +1,30 @@
+===================================
+openwebtext run
+Thu Dec  4 05:04:54 UTC 2025
+Job running on node: jg-b6000-0.grasp.maas
+===================================
+Attempting to activate venv
+[DEBUG] Python check:
+Python 3.12.3
+===================================
+Running prepare.py starts
+Thu Dec  4 05:04:54 UTC 2025
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/data/openwebtext/prepare.py", line 23, in <module>
+    dataset = load_dataset("openwebtext", num_proc=num_proc_load_dataset)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/datasets/load.py", line 1397, in load_dataset
+    builder_instance = load_dataset_builder(
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/datasets/load.py", line 1137, in load_dataset_builder
+    dataset_module = dataset_module_factory(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/datasets/load.py", line 1036, in dataset_module_factory
+    raise e1 from None
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/datasets/load.py", line 994, in dataset_module_factory
+    raise RuntimeError(f"Dataset scripts are no longer supported, but found {filename}")
+RuntimeError: Dataset scripts are no longer supported, but found openwebtext.py
+===================================
+Fin.

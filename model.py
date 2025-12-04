@@ -3,6 +3,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 import math
+import inspect
 
 class LayerNorm(nn.Module):
     def __init__(self, ndim, bias):
@@ -131,7 +132,7 @@ class GPT(nn.Module):
             ln_f = LayerNorm(config.n_embd, bias=config.bias),
         ))
         
-        self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
+        self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)  # Unembedding back to Vocab
         self.transformer.wte.weight = self.lm_head.weight   # weight tying : https://arxiv.org/abs/1608.05859
         
         # Init all weights
@@ -179,3 +180,60 @@ class GPT(nn.Module):
             loss = None
         
         return logits, loss
+    
+    def crop_block_size(self, block_size):
+        assert block_size <= self.config.block_size
+        self.config.block_size = block_size
+        self.transformer.wpe.weight = nn.Parameter(self.transformer.wpe.weight[:block_size])
+        for block in self.transformer.h:
+            if hasattr(block.attn, 'bias'):
+                block.attn.bias = block.attn.bias[:,:,:block_size,:block_size]
+    
+    @classmethod
+    def from_pretrained(cls, model_type, override_args=None):
+        raise f"Initiating from the gpt2* option is currently disabled!"
+    
+    def configure_optimizers(self, weight_decay, learning_rate, betas, device_type):
+        param_dict = {pn: p for pn, p in self.named_parameters()}        
+        param_dict = {pn: p for pn, p in param_dict.items() if p.requires_grad} # Filter out only required_grad params
+        
+        decay_params = [p for n, p in param_dict.items() if p.dim() >= 2]   # Weight decay only on weights (not bias!)
+        nodecay_params = [p for n, p in param_dict.items() if p.dim() < 2]  # Exclude bias terms
+        optim_groups = [
+            {'params': decay_params, 'weight_decay': weight_decay},
+            {'params': nodecay_params, 'weight_decay': 0.0}
+        ]
+        num_decay_params = sum(p.numel() for p in decay_params)
+        num_nodecay_params = sum(p.numel() for p in nodecay_params)
+        print(f"num decayed parameter tensors: {len(decay_params)}, with {num_decay_params:,} parameters")
+        print(f"num non-decayed parameter tensors: {len(nodecay_params)}, with {num_nodecay_params:,} parameters")
+        
+        # Use fused kernel if available (less GPU memory access)
+        fused_available = 'fused' in inspect.signature(torch.optim.AdamW).parameters
+        use_fused = fused_available and device_type == 'cuda'
+        extra_args = dict(fused=True) if use_fused else dict()
+        
+        optimizer = torch.optim.AdamW(optim_groups, lr=learning_rate, betas=betas, **extra_args)
+        print(f"using fused AdamW: {use_fused}")
+        
+        return optimizer
+        
+    
+    def estimate_mfu(self, fwdbwd_per_iter, dt):
+        pass
+    
+    @torch.no_grad()
+    def generate(self, idx, max_new_tokens, temperature=1.0, top_k=None):
+        for _ in range(max_new_tokens):
+            idx_cond = idx if idx.size(1) <= self.config.block_size else idx[:, -self.config.block_size:]
+            
+            logits, _ = self(idx_cond)
+            logits = logits[:, -1, :] / temperature
+            if top_k is not None:
+                v, _ = torch.topk(logits, min(top_k, logits.size(-1)))
+                logits[logits < v[:, [-1]]] = -float('Inf')
+            probs = F.softmax(logits, dim=-1)
+            idx_next = torch.multinomial(probs, num_samples=1)
+            idx = torch.cat((idx, idx_next), dim=1)
+        
+        return idx
