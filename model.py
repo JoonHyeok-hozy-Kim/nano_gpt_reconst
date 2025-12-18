@@ -4,6 +4,7 @@ from torch.nn import functional as F
 
 import math
 import inspect
+from dataclasses import dataclass
 
 class LayerNorm(nn.Module):
     def __init__(self, ndim, bias):
@@ -220,7 +221,15 @@ class GPT(nn.Module):
         
     
     def estimate_mfu(self, fwdbwd_per_iter, dt):
-        pass
+        N = self.get_num_params()
+        cfg = self.config
+        L, H, Q, T = cfg.n_layer, cfg.n_head, cfg.n_embd//cfg.n_head, cfg.block_size
+        flops_per_token = 6*N + 12*L*H*Q*T
+        flops_per_fwdbwd = flops_per_token * T
+        flops_per_iter = flops_per_fwdbwd * fwdbwd_per_iter
+        flops_achieved = flops_per_iter * (1.0/dt)
+        flops_promised = 312e12     # A100 GPU
+        return flops_achieved / flops_promised
     
     @torch.no_grad()
     def generate(self, idx, max_new_tokens, temperature=1.0, top_k=None):

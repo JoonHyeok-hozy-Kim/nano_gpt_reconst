@@ -1,4 +1,7 @@
+__pycache__/
 venv/
 bash_scripts/
 data/openwebtext/train.bin
 data/openwebtext/val.bin
+out/
+wandb/

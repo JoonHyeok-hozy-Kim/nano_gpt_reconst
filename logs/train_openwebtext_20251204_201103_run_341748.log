@@ -1,0 +1,277 @@
+===================================
+openwebtext run
+Thu Dec  4 20:11:03 UTC 2025
+Job running on node: jg-b6000-0.grasp.maas
+===================================
+Attempting to activate venv
+[DEBUG] Python check:
+Python 3.12.3
+===================================
+Thu Dec  4 20:11:03 UTC 2025
+Start : torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+W1204 20:11:04.661000 168445 torch/distributed/run.py:803] 
+W1204 20:11:04.661000 168445 torch/distributed/run.py:803] *****************************************
+W1204 20:11:04.661000 168445 torch/distributed/run.py:803] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1204 20:11:04.661000 168445 torch/distributed/run.py:803] *****************************************
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:421: UserWarning: Device capability of ncc1 unknown, assuming `cpu` and `cuda`. You can specify it in `device:backend` format in `init_process_group` call.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 64, in <module>
+    init_process_group(backend=backend)
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 95, in wrapper
+    func_return = func(*args, **kwargs)
+Overriding config with config/train_gpt2.py:   
+          # config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1   
+  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1769, in init_process_group
+    default_pg, _ = _new_process_group_helper(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1940, in _new_process_group_helper
+    assert backend in Backend.backend_type_map, f"Unknown backend type {backend}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Unknown backend type ncc1
+/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:421: UserWarning: Device capability of ncc1 unknown, assuming `cpu` and `cuda`. You can specify it in `device:backend` format in `init_process_group` call.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 64, in <module>
+    init_process_group(backend=backend)
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 95, in wrapper
+    func_return = func(*args, **kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1769, in init_process_group
+    default_pg, _ = _new_process_group_helper(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1940, in _new_process_group_helper
+    assert backend in Backend.backend_type_map, f"Unknown backend type {backend}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Unknown backend type ncc1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:421: UserWarning: Device capability of ncc1 unknown, assuming `cpu` and `cuda`. You can specify it in `device:backend` format in `init_process_group` call.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 64, in <module>
+    init_process_group(backend=backend)
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 95, in wrapper
+    func_return = func(*args, **kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1769, in init_process_group
+    default_pg, _ = _new_process_group_helper(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1940, in _new_process_group_helper
+    assert backend in Backend.backend_type_map, f"Unknown backend type {backend}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Unknown backend type ncc1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:421: UserWarning: Device capability of ncc1 unknown, assuming `cpu` and `cuda`. You can specify it in `device:backend` format in `init_process_group` call.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 64, in <module>
+    init_process_group(backend=backend)
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 95, in wrapper
+    func_return = func(*args, **kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1769, in init_process_group
+    default_pg, _ = _new_process_group_helper(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1940, in _new_process_group_helper
+    assert backend in Backend.backend_type_map, f"Unknown backend type {backend}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Unknown backend type ncc1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:421: UserWarning: Device capability of ncc1 unknown, assuming `cpu` and `cuda`. You can specify it in `device:backend` format in `init_process_group` call.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 64, in <module>
+    init_process_group(backend=backend)
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 95, in wrapper
+    func_return = func(*args, **kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1769, in init_process_group
+    default_pg, _ = _new_process_group_helper(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 1940, in _new_process_group_helper
+    assert backend in Backend.backend_type_map, f"Unknown backend type {backend}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Unknown backend type ncc1
+W1204 20:11:10.876000 168445 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 168481 closing signal SIGTERM
+W1204 20:11:10.877000 168445 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 168482 closing signal SIGTERM
+W1204 20:11:10.878000 168445 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 168483 closing signal SIGTERM
+W1204 20:11:10.878000 168445 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 168484 closing signal SIGTERM
+W1204 20:11:10.878000 168445 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 168486 closing signal SIGTERM
+W1204 20:11:10.879000 168445 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 168487 closing signal SIGTERM
+W1204 20:11:10.879000 168445 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 168488 closing signal SIGTERM
+E1204 20:11:11.194000 168445 torch/distributed/elastic/multiprocessing/api.py:882] failed (exitcode: 1) local_rank: 4 (pid: 168485) of binary: /home/hozy/research/gen_ai/nano_gpt_reconst/venv/bin/python
+Traceback (most recent call last):
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/run.py", line 936, in main
+    run(args)
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/run.py", line 927, in run
+    elastic_launch(
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 156, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 293, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-12-04_20:11:10
+  host      : jg-b6000-0.grasp.maas
+  rank      : 4 (local_rank: 4)
+  exitcode  : 1 (pid: 168485)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+===================================
+Fin.

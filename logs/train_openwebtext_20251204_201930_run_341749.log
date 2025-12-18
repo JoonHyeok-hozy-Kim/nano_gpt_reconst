@@ -1,0 +1,419 @@
+===================================
+openwebtext run
+Thu Dec  4 20:19:30 UTC 2025
+Job running on node: jg-b6000-0.grasp.maas
+===================================
+Attempting to activate venv
+[DEBUG] Python check:
+Python 3.12.3
+===================================
+Thu Dec  4 20:19:30 UTC 2025
+Start : torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+W1204 20:19:31.282000 170132 torch/distributed/run.py:803] 
+W1204 20:19:31.282000 170132 torch/distributed/run.py:803] *****************************************
+W1204 20:19:31.282000 170132 torch/distributed/run.py:803] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1204 20:19:31.282000 170132 torch/distributed/run.py:803] *****************************************
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+Overriding config with config/train_gpt2.py:
+# config for training GPT-2 (124M) down to very nice loss of ~2.85 on 1 node of 8X A100 40GB
+# launch as the following (e.g. in a screen session) and wait ~5 days:
+# $ torchrun --standalone --nproc_per_node=8 train.py config/train_gpt2.py
+
+wandb_log = True
+wandb_project = 'nano-gpt-reproduce'
+wandb_run_name='gpt2-124M'
+
+# these make the total batch size be ~0.5M
+# 12 batch size * 1024 block size * 5 gradaccum * 8 GPUs = 491,520
+batch_size = 12
+block_size = 1024
+gradient_accumulation_steps = 5 * 8
+
+# this makes total number of tokens be 300B
+max_iters = 600000
+lr_decay_iters = 600000
+
+# eval stuff
+eval_interval = 1000
+eval_iters = 200
+log_interval = 10
+
+# weight decay
+weight_decay = 1e-1
+tokens per iteration will be: 491,520
+Initializing a new model from scratch
+defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)
+tokens per iteration will be: 491,520
+tokens per iteration will be: 491,520
+Initializing a new model from scratch
+defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)
+Initializing a new model from scratch
+defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)
+tokens per iteration will be: 491,520
+Initializing a new model from scratch
+defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)
+tokens per iteration will be: 491,520
+Initializing a new model from scratch
+defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)
+tokens per iteration will be: 491,520
+Initializing a new model from scratch
+defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)
+tokens per iteration will be: 491,520
+Initializing a new model from scratch
+defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)
+tokens per iteration will be: 491,520
+Initializing a new model from scratch
+defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)
+/home/hozy/research/gen_ai/nano_gpt_reconst/model.py:144: FutureWarning: `nn.init.normal` is now deprecated in favor of `nn.init.normal_`.
+  torch.nn.init.normal(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+/home/hozy/research/gen_ai/nano_gpt_reconst/model.py:144: FutureWarning: `nn.init.normal` is now deprecated in favor of `nn.init.normal_`.
+  torch.nn.init.normal(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+/home/hozy/research/gen_ai/nano_gpt_reconst/model.py:144: FutureWarning: `nn.init.normal` is now deprecated in favor of `nn.init.normal_`.
+  torch.nn.init.normal(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+/home/hozy/research/gen_ai/nano_gpt_reconst/model.py:144: FutureWarning: `nn.init.normal` is now deprecated in favor of `nn.init.normal_`.
+  torch.nn.init.normal(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+/home/hozy/research/gen_ai/nano_gpt_reconst/model.py:144: FutureWarning: `nn.init.normal` is now deprecated in favor of `nn.init.normal_`.
+  torch.nn.init.normal(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+/home/hozy/research/gen_ai/nano_gpt_reconst/model.py:144: FutureWarning: `nn.init.normal` is now deprecated in favor of `nn.init.normal_`.
+  torch.nn.init.normal(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+number of parameters: 123.59M
+/home/hozy/research/gen_ai/nano_gpt_reconst/model.py:144: FutureWarning: `nn.init.normal` is now deprecated in favor of `nn.init.normal_`.
+  torch.nn.init.normal(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+number of parameters: 123.59M
+/home/hozy/research/gen_ai/nano_gpt_reconst/model.py:144: FutureWarning: `nn.init.normal` is now deprecated in favor of `nn.init.normal_`.
+  torch.nn.init.normal(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+number of parameters: 123.59M
+/home/hozy/research/gen_ai/nano_gpt_reconst/train.py:176: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=(dtype == 'float16'))
+num decayed parameter tensors: 50, with 124,354,560 parameters
+num non-decayed parameter tensors: 25, with 19,200 parameters
+/home/hozy/research/gen_ai/nano_gpt_reconst/train.py:176: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=(dtype == 'float16'))
+num decayed parameter tensors: 50, with 124,354,560 parameters
+num non-decayed parameter tensors: 25, with 19,200 parameters
+/home/hozy/research/gen_ai/nano_gpt_reconst/train.py:176: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=(dtype == 'float16'))
+num decayed parameter tensors: 50, with 124,354,560 parameters
+num non-decayed parameter tensors: 25, with 19,200 parameters
+number of parameters: 123.59M
+number of parameters: 123.59M
+/home/hozy/research/gen_ai/nano_gpt_reconst/train.py:176: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=(dtype == 'float16'))
+num decayed parameter tensors: 50, with 124,354,560 parameters
+num non-decayed parameter tensors: 25, with 19,200 parameters
+number of parameters: 123.59M
+number of parameters: 123.59M
+/home/hozy/research/gen_ai/nano_gpt_reconst/train.py:176: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=(dtype == 'float16'))
+num decayed parameter tensors: 50, with 124,354,560 parameters
+num non-decayed parameter tensors: 25, with 19,200 parameters
+number of parameters: 123.59M
+/home/hozy/research/gen_ai/nano_gpt_reconst/train.py:176: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=(dtype == 'float16'))
+num decayed parameter tensors: 50, with 124,354,560 parameters
+num non-decayed parameter tensors: 25, with 19,200 parameters
+/home/hozy/research/gen_ai/nano_gpt_reconst/train.py:176: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=(dtype == 'float16'))
+num decayed parameter tensors: 50, with 124,354,560 parameters
+num non-decayed parameter tensors: 25, with 19,200 parameters
+/home/hozy/research/gen_ai/nano_gpt_reconst/train.py:176: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=(dtype == 'float16'))
+num decayed parameter tensors: 50, with 124,354,560 parameters
+num non-decayed parameter tensors: 25, with 19,200 parameters
+using fused AdamW: Trueusing fused AdamW: True
+
+compiling the model... (takes a ~minute)compiling the model... (takes a ~minute)
+
+using fused AdamW: True
+compiling the model... (takes a ~minute)
+using fused AdamW: True
+compiling the model... (takes a ~minute)
+using fused AdamW: True
+using fused AdamW: Truecompiling the model... (takes a ~minute)
+using fused AdamW: True
+
+using fused AdamW: Truecompiling the model... (takes a ~minute)
+compiling the model... (takes a ~minute)
+
+compiling the model... (takes a ~minute)
+wandb: Currently logged in as: danielisdan (hozy-university-of-pennsylvania) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run 5cbg72em
+wandb: Tracking run with wandb version 0.23.0
+wandb: Run data is saved locally in /home/hozy/research/gen_ai/nano_gpt_reconst/wandb/run-20251204_201951-5cbg72em
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run gpt2-124M
+wandb: ⭐️ View project at https://wandb.ai/hozy-university-of-pennsylvania/nano-gpt-reproduce
+wandb: 🚀 View run at https://wandb.ai/hozy-university-of-pennsylvania/nano-gpt-reproduce/runs/5cbg72em
+step 0: train loss 10.9886, val loss 10.9897
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 303, in <module>
+[rank3]:     local_iter_num += 1
+[rank3]:     ^^^^^^^^^^^^^^
+[rank3]: NameError: name 'local_iter_num' is not defined. Did you mean: 'local_iter_run'?
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 303, in <module>
+[rank1]:     local_iter_num += 1
+[rank1]:     ^^^^^^^^^^^^^^
+[rank1]: NameError: name 'local_iter_num' is not defined. Did you mean: 'local_iter_run'?
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 303, in <module>
+[rank7]:     local_iter_num += 1
+[rank7]:     ^^^^^^^^^^^^^^
+[rank7]: NameError: name 'local_iter_num' is not defined. Did you mean: 'local_iter_run'?
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 303, in <module>
+[rank2]:     local_iter_num += 1
+[rank2]:     ^^^^^^^^^^^^^^
+[rank2]: NameError: name 'local_iter_num' is not defined. Did you mean: 'local_iter_run'?
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 303, in <module>
+[rank5]:     local_iter_num += 1
+[rank5]:     ^^^^^^^^^^^^^^
+[rank5]: NameError: name 'local_iter_num' is not defined. Did you mean: 'local_iter_run'?
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 303, in <module>
+[rank4]:     local_iter_num += 1
+[rank4]:     ^^^^^^^^^^^^^^
+[rank4]: NameError: name 'local_iter_num' is not defined. Did you mean: 'local_iter_run'?
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 303, in <module>
+[rank6]:     local_iter_num += 1
+[rank6]:     ^^^^^^^^^^^^^^
+[rank6]: NameError: name 'local_iter_num' is not defined. Did you mean: 'local_iter_run'?
+Traceback (most recent call last):
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 298, in <module>
+    if local_iter_num >= 5: # let the training loop settle a bit
+       ^^^^^^^^^^^^^^
+NameError: name 'local_iter_num' is not defined. Did you mean: 'local_iter_run'?
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/hozy/research/gen_ai/nano_gpt_reconst/train.py", line 298, in <module>
+[rank0]:     if local_iter_num >= 5: # let the training loop settle a bit
+[rank0]:        ^^^^^^^^^^^^^^
+[rank0]: NameError: name 'local_iter_num' is not defined. Did you mean: 'local_iter_run'?
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mgpt2-124M[0m at: [34m[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20251204_201951-5cbg72em/logs[0m
+[rank0]:[W1204 20:20:26.864659357 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+W1204 20:20:26.516000 170132 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 170172 closing signal SIGTERM
+W1204 20:20:26.516000 170132 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 170173 closing signal SIGTERM
+W1204 20:20:26.517000 170132 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 170174 closing signal SIGTERM
+W1204 20:20:26.518000 170132 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 170175 closing signal SIGTERM
+W1204 20:20:26.518000 170132 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 170176 closing signal SIGTERM
+W1204 20:20:26.518000 170132 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 170177 closing signal SIGTERM
+W1204 20:20:26.519000 170132 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 170179 closing signal SIGTERM
+E1204 20:20:27.262000 170132 torch/distributed/elastic/multiprocessing/api.py:882] failed (exitcode: 1) local_rank: 6 (pid: 170178) of binary: /home/hozy/research/gen_ai/nano_gpt_reconst/venv/bin/python
+Traceback (most recent call last):
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/run.py", line 936, in main
+    run(args)
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/run.py", line 927, in run
+    elastic_launch(
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 156, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hozy/research/gen_ai/nano_gpt_reconst/venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 293, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-12-04_20:20:26
+  host      : jg-b6000-0.grasp.maas
+  rank      : 6 (local_rank: 6)
+  exitcode  : 1 (pid: 170178)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+===================================
+Fin.

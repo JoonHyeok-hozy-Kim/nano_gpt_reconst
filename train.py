@@ -45,9 +45,9 @@ warmup_iters = 2000
 lr_decay_iters = 600000 
 min_lr = 6e-5
 # DDP settings
-backend = 'ncc1'
+backend = 'nccl'
 # system
-device = device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = 'cuda' # Options : 'cuda', 'cpu'
 dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16'
 compile = True
 
@@ -81,7 +81,7 @@ print(f"tokens per iteration will be: {tokens_per_iter:,}")
 
 if master_process:
     os.makedirs(out_dir, exist_ok=True)
-torch.matmul_seed(1337 + seed_offset)  # Different seed for each process
+torch.manual_seed(1337 + seed_offset)  # Different seed for each process
 torch.backends.cuda.matmul.allow_tf32 = True    # More throughput using TensorFloat-32
 torch.backends.cudnn.allow_tf32 = True  # Allow CUDA Deep Neural Network to use TensorFloat-32
 device_type = 'cuda' if 'cuda' in device else 'cpu'
@@ -98,7 +98,7 @@ def get_batch(split):
     
     ix = torch.randint(len(data) - block_size, (batch_size,))
     x = torch.stack([torch.from_numpy((data[i:i+block_size]).astype(np.int64)) for i in ix])
-    y = torch.stack([torch.from_numpy((data[i+1:i+1+block_size]).astype(np.int64)) for i in ix])
+    y = torch.stack([torch.from_numpy((data[i+1:i+1+block_size]).astype(np.int64)) for i in ix])    # One idx after!
     
     if device_type == 'cuda':
         x, y = x.pin_memory().to(device, non_blocking=True), y.pin_memory().to(device, non_blocking=True)
@@ -227,7 +227,7 @@ if wandb_log and master_process:
 # Training Loop
 X, Y = get_batch('train')
 t0 = time.time()
-local_iter_run = 0
+local_iter_num = 0
 raw_model = model.module if ddp else model
 running_mfu = -1.0
 
@@ -273,7 +273,7 @@ while True:
             loss = loss / gradient_accumulation_steps # scale the loss to account for gradient accumulation
             
         X, Y = get_batch('train')
-        scaler.scale(loss).backward()   # Only if fp16
+        scaler.scale(loss).backward()   # Backprop!
         
     # Clip gradient!    
     if grad_clip != 0.0:
